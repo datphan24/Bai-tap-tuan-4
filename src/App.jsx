@@ -4,9 +4,11 @@ import TodoList from './components/TodoList'
 import { v4 } from 'uuid'
 
 function App() {
-  const storageTodoList = JSON.parse(localStorage.getItem('TODO APP'))
   const [textInput, setTextInput] = useState('')
-  const [todoList, setTodoList] = useState(storageTodoList)
+  const [todoList, setTodoList] = useState(() => {
+    const storageTodoList = JSON.parse(localStorage.getItem('TODO APP'))
+    return storageTodoList
+  })
   useEffect(() => {
     localStorage.setItem('TODO APP', JSON.stringify(todoList))
   }, [todoList])
@@ -26,6 +28,11 @@ function App() {
     setTodoList(prev => prev.map(todo =>
       todo.id === id ? { ...todo, isComplete: !todo.isComplete } : todo)
     )
+  }
+  const handleRemoveAllTodoCompleted = () => {
+    const removeArr = todoList.filter(todo => todo.isComplete !== true)
+
+    setTodoList(removeArr)
   }
   return (
     <>
@@ -56,7 +63,7 @@ function App() {
             <button id="completed" className="button-footer">Completed</button>
           </div>
           <div className="corner">
-            <button id="clear-completed" className="button-footer">
+            <button id="clear-completed" onClick={handleRemoveAllTodoCompleted} className="button-footer">
               Clear Completed
             </button>
           </div>
