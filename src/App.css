@@ -19,6 +19,8 @@ main {
 .add-content {
   background: var(--clr-card-bg);
   border-radius: 5px;
+}
+.add-content > form {
   display: flex;
   justify-content: space-between;
 }
@@ -60,7 +62,6 @@ input[type='checkbox'] {
   margin: 1.5rem;
   border-radius: 50%;
   cursor: pointer;
-  opacity: 0;
 }
 .completed {
   color: var(--clr-gb-4);
