@@ -1,11 +1,15 @@
-import React,{ useState, useCallback } from 'react';
+import React,{ useState, useCallback, useEffect } from 'react';
 import './App.css';
 import TodoList from './components/TodoList'
 import { v4 } from 'uuid'
 
 function App() {
+  const storageTodoList = JSON.parse(localStorage.getItem('TODO APP'))
   const [textInput, setTextInput] = useState('')
-  const [todoList, setTodoList] = useState([])
+  const [todoList, setTodoList] = useState(storageTodoList)
+  useEffect(() => {
+    localStorage.setItem('TODO APP', JSON.stringify(todoList))
+  }, [todoList])
 
   const onTextInputChange = useCallback((e) => {
     setTextInput(e.target.value)
@@ -18,11 +22,11 @@ function App() {
     ])
     setTextInput('')
   }, [textInput, todoList])
-  const handleComplete = useCallback((id) => {
+  const handleComplete = (id) => {
     setTodoList(prev => prev.map(todo =>
       todo.id === id ? { ...todo, isComplete: !todo.isComplete } : todo)
     )
-  })
+  }
   return (
     <>
     <header>
