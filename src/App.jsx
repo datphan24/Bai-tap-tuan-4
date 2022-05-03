@@ -19,31 +19,30 @@ function App() {
   const handleSubmit = useCallback((e) => {
     e.preventDefault();
     setTodoList([
-      { id: v4(), name: textInput, isComplete: false },
+      { id: v4(), name: textInput.trim(), isComplete: false },
       ...todoList
     ])
     setTextInput('')
   }, [textInput, todoList])
-  const handleComplete = (id) => {
+  const handleComplete = id => {
     setTodoList(prev => prev.map(todo =>
       todo.id === id ? { ...todo, isComplete: !todo.isComplete } : todo)
     )
   }
-  const deleteItem = id => {
-    setTodoList(todoList.filter(item => item.id !== id));
-  };
-  function handleCount() {
+  const deleteTodo = id => {
+    setTodoList([...todoList].filter(todo => todo.id !== id))
+  }
+  const handleCount = () => {
     const countTodo = todoList.filter(todo => todo.isComplete === false)
     return countTodo.length
   }
   const handleRemoveAllTodoCompleted = () => {
     const removeArr = todoList.filter(todo => todo.isComplete !== true)
-
     setTodoList(removeArr)
   }
   return (
     <>
-    <header>
+      <header>
         <h1>T O D O</h1>
       </header>
       <main>
@@ -61,7 +60,7 @@ function App() {
             />
           </form>
         </div>
-        <TodoList todoList={todoList} checkCompleted={handleComplete} deleteItem={deleteItem} />
+        <TodoList todoList={todoList} checkCompleted={handleComplete} deleteTodo={deleteTodo} />
         <div className="stat general-size">
           <p><span className="number-item">{handleCount()}</span> item left</p>
           <div className="filter">
