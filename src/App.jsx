@@ -29,6 +29,13 @@ function App() {
       todo.id === id ? { ...todo, isComplete: !todo.isComplete } : todo)
     )
   }
+  const deleteItem = id => {
+    setTodoList(todoList.filter(item => item.id !== id));
+  };
+  function handleCount() {
+    const countTodo = todoList.filter(todo => todo.isComplete === false)
+    return countTodo.length
+  }
   const handleRemoveAllTodoCompleted = () => {
     const removeArr = todoList.filter(todo => todo.isComplete !== true)
 
@@ -54,9 +61,9 @@ function App() {
             />
           </form>
         </div>
-        <TodoList todoList={todoList} checkCompleted={handleComplete} />
+        <TodoList todoList={todoList} checkCompleted={handleComplete} deleteItem={deleteItem} />
         <div className="stat general-size">
-          <p><span className="number-item">0</span> item left</p>
+          <p><span className="number-item">{handleCount()}</span> item left</p>
           <div className="filter">
             <button id="all" className="button-footer on">All</button>
             <button id="active" className="button-footer">Active</button>

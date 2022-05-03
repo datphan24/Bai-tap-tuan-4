@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Todo({ todo, checkCompleted }) {
+export default function Todo({ todo, checkCompleted, deleteItem }) {
   return (
     <li className="item-todo general-size">
       <span className={todo.isComplete ? 'completed' : ''} onClick={() => checkCompleted(todo.id)}>{todo.name}</span>
@@ -9,7 +9,7 @@ export default function Todo({ todo, checkCompleted }) {
         defaultValue={todo.name}
         className="add-input hidden"
       />
-      <span>
+      <span onClick={deleteItem}>
         <i className="fa fa-times-circle" aria-hidden="true"></i>
       </span>
     </li>
