@@ -1,14 +1,15 @@
 import React,{ useState, useCallback, useEffect } from 'react';
 import './App.css';
 import TodoList from './components/TodoList'
+import FilterActive from './components/FilterActive'
 import { v4 } from 'uuid'
 
 function App() {
   const [textInput, setTextInput] = useState('')
   const [todoList, setTodoList] = useState(() => {
-    const storageTodoList = JSON.parse(localStorage.getItem('TODO APP'))
-    return storageTodoList
+    return JSON.parse(localStorage.getItem('TODO APP'))
   })
+  const [editingText, setEditingText] = useState('')
   useEffect(() => {
     localStorage.setItem('TODO APP', JSON.stringify(todoList))
   }, [todoList])
@@ -22,6 +23,7 @@ function App() {
       { id: v4(), name: textInput.trim(), isComplete: false },
       ...todoList
     ])
+
     setTextInput('')
   }, [textInput, todoList])
   const handleComplete = id => {
@@ -31,6 +33,18 @@ function App() {
   }
   const deleteTodo = id => {
     setTodoList([...todoList].filter(todo => todo.id !== id))
+  }
+  const handleEditChange = (e) => {
+    setEditingText(e.target.value)
+  }
+  const editTodo = id => {
+    const updateTodo = [...todoList].map(todo => {
+      if (todo.id === id) {
+        todo.name = editingText
+      }
+      return todo
+    })
+    setTodoList(updateTodo)
   }
   const handleCount = () => {
     const countTodo = todoList.filter(todo => todo.isComplete === false)
@@ -55,19 +69,21 @@ function App() {
               placeholder="Create a new todo..."
               spellCheck="false"
               autoComplete="off"
-              defaultValue={textInput}
+              value={textInput}
               onChange={onTextInputChange}
             />
           </form>
         </div>
-        <TodoList todoList={todoList} checkCompleted={handleComplete} deleteTodo={deleteTodo} />
+        <TodoList
+          todoList={todoList}
+          checkCompleted={handleComplete}
+          deleteTodo={deleteTodo}
+          handleEditChange={handleEditChange}
+          editTodo={editTodo}
+        />
         <div className="stat general-size">
           <p><span className="number-item">{handleCount()}</span> item left</p>
-          <div className="filter">
-            <button id="all" className="button-footer on">All</button>
-            <button id="active" className="button-footer">Active</button>
-            <button id="completed" className="button-footer">Completed</button>
-          </div>
+          <FilterActive />
           <div className="corner">
             <button id="clear-completed" onClick={handleRemoveAllTodoCompleted} className="button-footer">
               Clear Completed
