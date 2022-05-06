@@ -7,7 +7,8 @@ export default function Todo({ editTodo, handleEditChange, todo, checkCompleted,
   }
   const handleSubmitEditing = (e) => {
     if (e.key === 'Enter') {
-      return editTodo(todo.id)
+      editTodo(todo.id)
+      window.location.reload(true)
     } else {
       return todo.name
     }

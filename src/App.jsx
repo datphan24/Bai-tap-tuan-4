@@ -6,10 +6,11 @@ import { v4 } from 'uuid'
 
 function App() {
   const [textInput, setTextInput] = useState('')
+  const [editingText, setEditingText] = useState('')
+  const [status, setStatus] = useState('ALL')
   const [todoList, setTodoList] = useState(() => {
     return JSON.parse(localStorage.getItem('TODO APP'))
   })
-  const [editingText, setEditingText] = useState('')
   useEffect(() => {
     localStorage.setItem('TODO APP', JSON.stringify(todoList))
   }, [todoList])
@@ -23,7 +24,6 @@ function App() {
       { id: v4(), name: textInput.trim(), isComplete: false },
       ...todoList
     ])
-
     setTextInput('')
   }, [textInput, todoList])
   const handleComplete = id => {
@@ -54,6 +54,16 @@ function App() {
     const removeArr = todoList.filter(todo => todo.isComplete !== true)
     setTodoList(removeArr)
   }
+  const filterByStatus = (todoList = [], status = '') => {
+    switch (status) {
+      case 'ACTIVE':
+        return todoList.filter(todo => todo.isComplete !== true)
+      case 'COMPLETED':
+        return todoList.filter(todo => todo.isComplete === true)
+      default:
+        return todoList
+    }
+  }
   return (
     <>
       <header>
@@ -75,7 +85,7 @@ function App() {
           </form>
         </div>
         <TodoList
-          todoList={todoList}
+          todoList={filterByStatus(todoList, status)}
           checkCompleted={handleComplete}
           deleteTodo={deleteTodo}
           handleEditChange={handleEditChange}
@@ -83,7 +93,10 @@ function App() {
         />
         <div className="stat general-size">
           <p><span className="number-item">{handleCount()}</span> item left</p>
-          <FilterActive />
+          <FilterActive
+            status={status}
+            setStatus={setStatus}
+          />
           <div className="corner">
             <button id="clear-completed" onClick={handleRemoveAllTodoCompleted} className="button-footer">
               Clear Completed
