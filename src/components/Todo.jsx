@@ -9,8 +9,6 @@ export default function Todo({ editTodo, handleEditChange, todo, checkCompleted,
     if (e.key === 'Enter') {
       editTodo(todo.id)
       window.location.reload(true)
-    } else {
-      return todo.name
     }
   }
   return (

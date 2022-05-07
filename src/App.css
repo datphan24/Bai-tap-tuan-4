@@ -33,6 +33,7 @@ main {
   outline: none;
   border: none;
   background: var(--clr-card-bg);
+  margin: 1.5rem;
 }
 /* content todo */
 .list-todo {

@@ -72,7 +72,7 @@ function App() {
       <main>
         <div className="add-content">
           <form active='' onSubmit={handleSubmit}>
-            <input type="checkbox" name="" className="checkbox" />
+            <input type="checkbox" name="" className={todoList.length === 0 ? "checkbox hidden" : "checkbox"} />
             <input
               type="text"
               className="add-input"
@@ -91,15 +91,17 @@ function App() {
           handleEditChange={handleEditChange}
           editTodo={editTodo}
         />
-        <div className="stat general-size">
+        <div className={todoList.length === 0 ? "stat general-size hidden" : 'stat general-size'}>
           <p><span className="number-item">{handleCount()}</span> item left</p>
           <FilterActive
             status={status}
             setStatus={setStatus}
           />
           <div className="corner">
-            <button id="clear-completed" onClick={handleRemoveAllTodoCompleted} className="button-footer">
-              Clear Completed
+            <button
+              id="clear-completed"
+              onClick={handleRemoveAllTodoCompleted} className="button-footer"
+            >Clear Completed
             </button>
           </div>
         </div>
