@@ -1,6 +1,7 @@
 import React from 'react';
+import { Filter } from '../interface/interface'
 
-export default function FilterActive({ status, setStatus }) {
+export default function FilterActive({ status, setStatus }: Filter) {
 
   return (
     <div className="filter">

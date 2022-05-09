@@ -1,8 +1,9 @@
 import React,{ useState, useCallback, useEffect } from 'react';
 import './App.css';
-import TodoList from './components/TodoList'
-import FilterActive from './components/FilterActive'
+import TodoList from './components/TodoList.tsx'
+import FilterActive from './components/FilterActive.tsx'
 import { v4 } from 'uuid'
+import { Todo } from './interface/interface'
 
 function App() {
   const [textInput, setTextInput] = useState('')
@@ -10,16 +11,21 @@ function App() {
   const [status, setStatus] = useState('ALL')
   const [checkboxAll, setCheckBoxAll] = useState(false);
   const [todoList, setTodoList] = useState(() => {
-    return JSON.parse(localStorage.getItem('TODO APP'))
+    let savedTodoList = localStorage.getItem('TODO APP')
+    if (savedTodoList) {
+      return JSON.parse(savedTodoList)
+    } else {
+      return []
+    }
   })
   useEffect(() => {
     localStorage.setItem('TODO APP', JSON.stringify(todoList))
   }, [todoList])
 
-  const onTextInputChange = useCallback((e) => {
+  const onTextInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setTextInput(e.target.value)
   }, [])
-  const handleSubmit = useCallback((e) => {
+  const handleSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setTodoList([
       { id: v4(), name: textInput.trim(), isComplete: false },
@@ -27,20 +33,20 @@ function App() {
     ])
     setTextInput('')
   }, [textInput, todoList])
-  const handleComplete = id => {
-    setTodoList(prev => prev.map(todo =>
+  const handleComplete = (id: string) => {
+    setTodoList((prev: Todo[]) => prev.map((todo: Todo) =>
       todo.id === id ? { ...todo, isComplete: !todo.isComplete } : todo)
     )
     setCheckBoxAll(false)
   }
-  const deleteTodo = id => {
-    setTodoList([...todoList].filter(todo => todo.id !== id))
+  const deleteTodo = (id: string) => {
+    setTodoList([...todoList].filter((todo: Todo) => todo.id !== id))
   }
-  const handleEditChange = (e) => {
+  const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditingText(e.target.value)
   }
-  const editTodo = id => {
-    let updateTodo = [...todoList].map(todo => {
+  const editTodo = (id: string) => {
+    let updateTodo = [...todoList].map((todo: Todo) => {
       if (todo.id === id) {
         todo.name = editingText
       }
@@ -49,19 +55,19 @@ function App() {
     setTodoList(updateTodo)
   }
   const handleCount = () => {
-    let countTodo = todoList.filter(todo => todo.isComplete === false)
+    let countTodo = todoList.filter((todo: Todo)=> todo.isComplete === false)
     return countTodo.length
   }
   const handleRemoveAllTodoCompleted = () => {
-    let removeArr = todoList.filter(todo => todo.isComplete !== true)
+    let removeArr = todoList.filter((todo: Todo) => todo.isComplete !== true)
     setTodoList(removeArr)
   }
   const filterByStatus = (todoList = [], status = '') => {
     switch (status) {
       case 'ACTIVE':
-        return todoList.filter(todo => todo.isComplete !== true)
+        return todoList.filter((todo: Todo) => todo.isComplete !== true)
       case 'COMPLETED':
-        return todoList.filter(todo => todo.isComplete === true)
+        return todoList.filter((todo: Todo) => todo.isComplete === true)
       default:
         return todoList
     }
@@ -71,17 +77,17 @@ function App() {
   }
   const handleTickAllTodoComplete = () => {
     if (checkboxAll===false) {
-      setTodoList(todoList.map(todo => {
+      setTodoList(todoList.map((todo: Todo) => {
         return { ...todo, isComplete :  true}
       }))
     } else {
-      setTodoList(todoList.map(todo => {
+      setTodoList(todoList.map((todo: Todo) => {
         return { ...todo, isComplete :  false}
       }))
     }
   }
   function checkTodoComplete() {
-    let todoComplete = todoList.filter(todo => todo.isComplete === true)
+    let todoComplete = todoList.filter((todo: Todo) => todo.isComplete === true)
     if (todoComplete.length === todoList.length) {
       return true
     } else {
@@ -95,7 +101,7 @@ function App() {
       </header>
       <main>
         <div className="add-content">
-          <form active='' onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
             <input
               type="checkbox"
               className={todoList.length === 0 ? "checkbox hidden" : "checkbox"}

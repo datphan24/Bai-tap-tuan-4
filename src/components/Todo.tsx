@@ -1,14 +1,15 @@
 import React,{ useState } from 'react'
+import {TodoForm} from '../interface/interface'
 
-export default function Todo({ editTodo, handleEditChange, todo, checkCompleted, deleteTodo }) {
+export default function Todo({ editTodo, handleEditChange, todo, checkCompleted, deleteTodo }: TodoForm) {
   const [editing, setEditing] = useState(true)
   const handleEdit = () => {
     setEditing(!editing)
   }
-  const handleSubmitEditing = (e) => {
+  const handleSubmitEditing = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       editTodo(todo.id)
-      window.location.reload(true)
+      window.location.reload()
     }
   }
   return (
