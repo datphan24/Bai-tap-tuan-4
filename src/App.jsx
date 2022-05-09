@@ -8,6 +8,7 @@ function App() {
   const [textInput, setTextInput] = useState('')
   const [editingText, setEditingText] = useState('')
   const [status, setStatus] = useState('ALL')
+  const [checkboxAll, setCheckBoxAll] = useState(false);
   const [todoList, setTodoList] = useState(() => {
     return JSON.parse(localStorage.getItem('TODO APP'))
   })
@@ -30,6 +31,7 @@ function App() {
     setTodoList(prev => prev.map(todo =>
       todo.id === id ? { ...todo, isComplete: !todo.isComplete } : todo)
     )
+    setCheckBoxAll(false)
   }
   const deleteTodo = id => {
     setTodoList([...todoList].filter(todo => todo.id !== id))
@@ -38,7 +40,7 @@ function App() {
     setEditingText(e.target.value)
   }
   const editTodo = id => {
-    const updateTodo = [...todoList].map(todo => {
+    let updateTodo = [...todoList].map(todo => {
       if (todo.id === id) {
         todo.name = editingText
       }
@@ -47,11 +49,11 @@ function App() {
     setTodoList(updateTodo)
   }
   const handleCount = () => {
-    const countTodo = todoList.filter(todo => todo.isComplete === false)
+    let countTodo = todoList.filter(todo => todo.isComplete === false)
     return countTodo.length
   }
   const handleRemoveAllTodoCompleted = () => {
-    const removeArr = todoList.filter(todo => todo.isComplete !== true)
+    let removeArr = todoList.filter(todo => todo.isComplete !== true)
     setTodoList(removeArr)
   }
   const filterByStatus = (todoList = [], status = '') => {
@@ -64,6 +66,28 @@ function App() {
         return todoList
     }
   }
+  function handleCheckBoxAllComplete() {
+    setCheckBoxAll(!checkboxAll);
+  }
+  const handleTickAllTodoComplete = () => {
+    if (checkboxAll===false) {
+      setTodoList(todoList.map(todo => {
+        return { ...todo, isComplete :  true}
+      }))
+    } else {
+      setTodoList(todoList.map(todo => {
+        return { ...todo, isComplete :  false}
+      }))
+    }
+  }
+  function checkTodoComplete() {
+    let todoComplete = todoList.filter(todo => todo.isComplete === true)
+    if (todoComplete.length === todoList.length) {
+      return true
+    } else {
+      return false
+    }
+  }
   return (
     <>
       <header>
@@ -72,7 +96,13 @@ function App() {
       <main>
         <div className="add-content">
           <form active='' onSubmit={handleSubmit}>
-            <input type="checkbox" name="" className={todoList.length === 0 ? "checkbox hidden" : "checkbox"} />
+            <input
+              type="checkbox"
+              className={todoList.length === 0 ? "checkbox hidden" : "checkbox"}
+              onChange={handleCheckBoxAllComplete}
+              onClick={() => handleTickAllTodoComplete()}
+              checked={checkTodoComplete()}
+            />
             <input
               type="text"
               className="add-input"

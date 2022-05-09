@@ -17,7 +17,8 @@ export default function Todo({ editTodo, handleEditChange, todo, checkCompleted,
         <span
           className={todo.isComplete ? 'completed' : ''}
           onClick={() => checkCompleted(todo.id)}
-          onDoubleClick={handleEdit}>{todo.name}
+          onDoubleClick={handleEdit}
+        >{todo.name}
         </span>
       : <input
         type="text"
