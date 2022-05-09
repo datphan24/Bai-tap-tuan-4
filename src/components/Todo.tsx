@@ -1,7 +1,7 @@
 import React,{ useState } from 'react'
-import {TodoForm} from '../interface/interface'
+import {TodoItem} from '../interface/interface'
 
-export default function Todo({ editTodo, handleEditChange, todo, checkCompleted, deleteTodo }: TodoForm) {
+export default function Todo({ editTodo, handleEditChange, todo, checkCompleted, deleteTodo }: TodoItem) {
   const [editing, setEditing] = useState(true)
   const handleEdit = () => {
     setEditing(!editing)

@@ -1,9 +1,9 @@
 import React,{ useState, useCallback, useEffect } from 'react';
 import './App.css';
-import TodoList from './components/TodoList.tsx'
-import FilterActive from './components/FilterActive.tsx'
+import TodoList from './components/TodoList'
+import FilterActive from './components/FilterActive'
 import { v4 } from 'uuid'
-import { Todo } from './interface/interface'
+import { Todos } from './interface/interface'
 
 function App() {
   const [textInput, setTextInput] = useState('')
@@ -34,19 +34,19 @@ function App() {
     setTextInput('')
   }, [textInput, todoList])
   const handleComplete = (id: string) => {
-    setTodoList((prev: Todo[]) => prev.map((todo: Todo) =>
+    setTodoList((prev: Todos[]) => prev.map((todo: Todos) =>
       todo.id === id ? { ...todo, isComplete: !todo.isComplete } : todo)
     )
     setCheckBoxAll(false)
   }
   const deleteTodo = (id: string) => {
-    setTodoList([...todoList].filter((todo: Todo) => todo.id !== id))
+    setTodoList([...todoList].filter((todo: Todos) => todo.id !== id))
   }
   const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditingText(e.target.value)
   }
   const editTodo = (id: string) => {
-    let updateTodo = [...todoList].map((todo: Todo) => {
+    let updateTodo = [...todoList].map((todo: Todos) => {
       if (todo.id === id) {
         todo.name = editingText
       }
@@ -55,39 +55,39 @@ function App() {
     setTodoList(updateTodo)
   }
   const handleCount = () => {
-    let countTodo = todoList.filter((todo: Todo)=> todo.isComplete === false)
+    let countTodo = todoList.filter((todo: Todos)=> todo.isComplete === false)
     return countTodo.length
   }
   const handleRemoveAllTodoCompleted = () => {
-    let removeArr = todoList.filter((todo: Todo) => todo.isComplete !== true)
+    let removeArr = todoList.filter((todo: Todos) => todo.isComplete !== true)
     setTodoList(removeArr)
   }
   const filterByStatus = (todoList = [], status = '') => {
     switch (status) {
       case 'ACTIVE':
-        return todoList.filter((todo: Todo) => todo.isComplete !== true)
+        return todoList.filter((todo: Todos) => todo.isComplete !== true)
       case 'COMPLETED':
-        return todoList.filter((todo: Todo) => todo.isComplete === true)
+        return todoList.filter((todo: Todos) => todo.isComplete === true)
       default:
         return todoList
     }
   }
-  function handleCheckBoxAllComplete() {
+  const handleCheckBoxAllComplete = () => {
     setCheckBoxAll(!checkboxAll);
   }
   const handleTickAllTodoComplete = () => {
     if (checkboxAll===false) {
-      setTodoList(todoList.map((todo: Todo) => {
+      setTodoList(todoList.map((todo: Todos) => {
         return { ...todo, isComplete :  true}
       }))
     } else {
-      setTodoList(todoList.map((todo: Todo) => {
+      setTodoList(todoList.map((todo: Todos) => {
         return { ...todo, isComplete :  false}
       }))
     }
   }
-  function checkTodoComplete() {
-    let todoComplete = todoList.filter((todo: Todo) => todo.isComplete === true)
+  const checkTodoComplete = () => {
+    let todoComplete = todoList.filter((todo: Todos) => todo.isComplete === true)
     if (todoComplete.length === todoList.length) {
       return true
     } else {

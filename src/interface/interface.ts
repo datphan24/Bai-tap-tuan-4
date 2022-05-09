@@ -1,4 +1,4 @@
-export interface Todo {
+export interface Todos {
   name: string
   isComplete: boolean
   id: string
@@ -6,12 +6,18 @@ export interface Todo {
 export interface TodoForm {
   handleEditChange: any
   editTodo: Function
-  todoList: []
+  todoList: Todos[]
   checkCompleted: Function
   deleteTodo: Function
-  todo: Todo
 }
 export interface Filter {
   status: string
   setStatus: Function
+}
+export interface TodoItem {
+  editTodo: Function
+  handleEditChange: any
+  todo: Todos
+  checkCompleted: Function
+  deleteTodo: Function
 }

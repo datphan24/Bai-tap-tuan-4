@@ -1,11 +1,11 @@
 import React from "react"
-import Todo from "./Todo.tsx"
-import { TodoForm } from '../interface/interface'
+import Todo from "./Todo"
+import { TodoForm,Todos } from '../interface/interface'
 
 export default function TodoList({ handleEditChange,editTodo, todoList, checkCompleted, deleteTodo }: TodoForm) {
   return (
     <ul className="list-todo">
-      {todoList.map((todo: Todo) =>
+      {todoList.map((todo: Todos) =>
         <Todo
           key={todo.id}
           checkCompleted={checkCompleted}
