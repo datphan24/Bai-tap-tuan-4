@@ -2,14 +2,14 @@ import React,{ useState } from 'react'
 import {TodoItem} from '../interface/interface'
 
 export default function Todo({ editTodo, handleEditChange, todo, checkCompleted, deleteTodo }: TodoItem) {
-  const [editing, setEditing] = useState(true)
+  const [editing, setEditing] = useState<boolean>(true)
   const handleEdit = () => {
     setEditing(!editing)
   }
   const handleSubmitEditing = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       editTodo(todo.id)
-      window.location.reload()
+      setEditing(true)
     }
   }
   return (
