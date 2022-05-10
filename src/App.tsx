@@ -28,11 +28,17 @@ function App() {
 
   const handleSubmit = ((e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setTodoList([
-      { id: v4(), name: textInput.trim(), isComplete: false },
-      ...todoList
-    ])
-    setTextInput('')
+    if (textInput === '') {
+      alert('Please enter a to-do !')
+    } else {
+      setTodoList([
+        { id: v4(), name: textInput.trim(), isComplete: false },
+        ...todoList
+      ])
+      setTextInput('')
+      setStatus('ALL')
+      setCheckBoxAll(false)
+    }
   })
 
   const handleComplete = (id: string) => {
