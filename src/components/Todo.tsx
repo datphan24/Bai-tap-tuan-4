@@ -1,14 +1,15 @@
 import React,{ useState } from 'react'
+import {TodoItem} from '../interface/interface'
 
-export default function Todo({ editTodo, handleEditChange, todo, checkCompleted, deleteTodo }) {
-  const [editing, setEditing] = useState(true)
+export default function Todo({ editTodo, handleEditChange, todo, checkCompleted, deleteTodo }: TodoItem) {
+  const [editing, setEditing] = useState<boolean>(true)
   const handleEdit = () => {
     setEditing(!editing)
   }
-  const handleSubmitEditing = (e) => {
+  const handleSubmitEditing = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       editTodo(todo.id)
-      window.location.reload(true)
+      setEditing(true)
     }
   }
   return (
@@ -17,7 +18,8 @@ export default function Todo({ editTodo, handleEditChange, todo, checkCompleted,
         <span
           className={todo.isComplete ? 'completed' : ''}
           onClick={() => checkCompleted(todo.id)}
-          onDoubleClick={handleEdit}>{todo.name}
+          onDoubleClick={handleEdit}
+        >{todo.name}
         </span>
       : <input
         type="text"
