@@ -1,38 +1,93 @@
-.App {
-  text-align: center;
+body {
+  font: var(--fw-normal) var(--base-font) var(--ff-sans);
+  background: var(--clr-page-bg) var(--img-bg) no-repeat 0% 0% / 100vw 25rem;
+  padding-top: 8rem;
+  width: min(85%, 54rem);
+  margin: auto;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+header > h1 {
+  color: var(--clr-white);
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+main {
+  margin: 3rem 0;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.general-size {
+  min-height: 6rem;
+  background: var(--clr-card-bg);
+  border-bottom: 2px solid var(--clr-gb-3);
+}
+.add-content {
+  background: var(--clr-card-bg);
+  border-radius: 5px;
+}
+.add-content > form {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+}
+.add-input {
+  border-radius: 5px;
+  font: var(--fw-normal);
+  line-height: 2rem;
+  color: var(--clr-white);
+  flex: 1;
+  outline: none;
+  border: none;
+  background: var(--clr-card-bg);
+  margin: 1.5rem;
+}
+/* content todo */
+.list-todo {
+  margin-top: 2rem;
+  color: var(--clr-gb-1);
+}
+.item-todo {
+  font-weight: var(--fw-normal);
+  display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  justify-content: space-between;
 }
-
-.App-link {
-  color: #61dafb;
+.item-todo > span,
+.item-todo > input {
+  margin: 0.5rem;
+  padding: 1rem;
+  max-width: 40rem;
+  word-wrap: break-word;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.item-todo span:last-child,
+.item-todo span:first-child {
+  cursor: pointer;
+}
+input[type='checkbox'] {
+  height: 25px;
+  min-width: 25px;
+  margin: 1.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.completed {
+  color: var(--clr-gb-4);
+  text-decoration: line-through;
+}
+/* footer */
+.stat {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  color: var(--clr-gb-2);
+}
+.button-footer {
+  outline: none;
+  background: var(--clr-card-bg);
+  padding: 5px;
+  cursor: pointer;
+  border: none;
+  color: var(--clr-gb-2);
+}
+.on {
+  font-weight: bold;
+  color: var(--clr-green);
+}
+footer {
+  color: var(--clr-gb-2);
+  text-align: center;
 }

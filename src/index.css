@@ -1,13 +1,37 @@
-body {
+:root {
+  --ff-sans: 'Josefin Sans', sans-serif;
+  --base-font: 1.6rem;
+  --fw-normal: 550;
+  --img-bg: url('/src/background.jpg');
+  --clr-white: hsl(0, 0%, 100%);
+  --clr-page-bg: hsl(235, 21%, 11%);
+  --clr-card-bg: hsl(235, 24%, 19%);
+  --clr-green: hsl(192, 100%, 67%);
+  --clr-pink: hsl(280, 87%, 65%);
+  --clr-gb-1: hsl(234, 39%, 75%);
+  --clr-gb-2: hsl(234, 11%, 52%);
+  --clr-gb-3: hsl(237, 12%, 36%);
+  --clr-gb-4: hsl(233, 14%, 35%);
+}
+* {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+html {
+  font-size: 62.5%;
+  position: relative;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+ul {
+  list-style: none;
+}
+.hidden {
+  display: none !important;
 }
